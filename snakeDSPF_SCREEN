@@ -1,0 +1,44 @@
+A*%%TS  SD  20161112  193721  VARUNVISH   REL-V5R4M0  5722-WDS    
+A*%%EC                                                            
+A                                      DSPSIZ(24 80 *DS3)         
+A          R SCREENR                                              
+A*%%TS  SD  20161112  193721  VARUNVISH   REL-V5R4M0  5722-WDS    
+A                                      CF12(12 'exit')            
+A                                      CF01(01 'left')            
+A                                      CF02(02 'right')           
+A                                      CF03(03 'up')              
+A                                      CF04(04 'down')            
+A                                      OVERLAY                    
+A                                  1 31'SCORE :'                  
+A            FLD001        60A  O  3 10                           
+A            FLD002        60A  O  4 10                           
+A            FLD003        60A  O  5 10                           
+A            FLD004        60A  O  6 10                           
+A            FLD005        60A  O  7 10                           
+A            FLD006        60A  O  8 10                           
+A            FLD007        60A  O  9 10    
+A            FLD008        60A  O 10 10                        
+A            FLD009        60A  O 11 10                        
+A            FLD010        60A  O 12 10                        
+A            FLD011        60A  O 13 10                        
+A            FLD012        60A  O 14 10                        
+A            FLD013        60A  O 15 10                        
+A            FLD014        60A  O 16 10                        
+A            FLD015        60A  O 17 10                        
+A            FLD016        60A  O 18 10                        
+A            FLD017        60A  O 19 10                        
+A            FLD018        60A  O 20 10                        
+A            FLD019        60A  O 21 10                        
+A            FLD020        60A  O 22 10                        
+A            SCORE          5A  O  1 39                        
+A                                  6  2'F1=LFT'                
+A                                  8  2'F3=TOP'                
+A                                  9  2'F4=BOT'                
+A                                  7  2'F2=RGT'                
+A          R GAMEOVER                                          
+A*%%TS  SD  20161112  193149  VARUNVISH   REL-V5R4M0  5722-WDS 
+A                                      WINDOW(6 15 6 40)       
+A                                  3 15'GAME'                  
+A                                      COLOR(WHT)              
+A                                  3 20'OVER'                  
+A                                      COLOR(WHT)              
