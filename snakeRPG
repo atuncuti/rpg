@@ -1,0 +1,379 @@
+HDFTACTGRP(*NO)                                       
+HOPTION(*NODEBUGIO)                                   
+FSCREEN    CF   E             WORKSTN                 
+D x               S              2  0 Dim(40)         
+D y               S              2  0 Dim(40)         
+D z               S              1    Dim(40)         
+D@x               S              2  0 Dim(40)         
+D@y               S              2  0 Dim(40)         
+D@z               S              1    Dim(40)         
+Di                S              2  0                 
+Dk                S              2  0                 
+DVal              S              2  0                 
+DScoren           S              5  0                 
+Dfood             S              1    inz('*')        
+Dsideborder       S              1    inz('|')        
+Dtopbotborder     S              1    inz('-')        
+D Randomx         S              5  0                 
+D Randomy         S              5  0                 
+Dsnakebody        S              1    inz('¢')        
+Dmakfood          S              1N                                       
+Doverlap          S              1N                                       
+C                                                                         
+C                   Eval      makfood = *On                               
+C                   MOVE      Scoren        Score                         
+C* Set Loop                                                               
+C                   DoW       NOT *IN12                                   
+C                                                                         
+C                   ExSr      ClearScreen                                 
+C                                                                         
+C                                                                         
+C                   ExSr      BldSnake                                    
+C                                                                         
+C                   ExSr      MakeFood                                    
+C                                                                         
+C                   Exsr      BldBoder                                    
+C                                                                         
+C                   EXFMT     SCREENR                                     
+C                                                                         
+C                   SELECT                                                  
+C                   WHEN      *IN02=*ON                                     
+C                   EXSR      MovRight                                      
+C                   WHEN      *IN03=*ON                                     
+C                   EXSR      MovUp                                         
+C                   WHEN      *IN01=*ON                                     
+C                   EXSR      MovLeft                                       
+C                   WHEN      *IN04=*ON                                     
+C                   EXSR      MovDown                                       
+C                   ENDSL                                                   
+C                                                                           
+C                   ExSR      checksituation                                
+C                                                                           
+C                   EndDo                                                   
+C                                                                           
+C     END           TAG                                                     
+C                   SETON                                            LR     
+C                                                                           
+C     BldSnake      BEGSR                                                   
+C                                                                        
+C                   For       val = 1 to i by 1                          
+C                                                                        
+C                   SELECT                                               
+C                   When      y(val) = 1                                 
+C                   Eval      %subst(FLD001:x(val):1) = z(val)           
+C                   When      y(val) = 2                                 
+C                   Eval      %subst(FLD002:x(val):1) = z(val)           
+C                   When      y(val) = 3                                 
+C                   Eval      %subst(FLD003:x(val):1) = z(val)           
+C                   When      y(val) = 4                                 
+C                   Eval      %subst(FLD004:x(val):1) = z(val)           
+C                   When      y(val) = 5                                 
+C                   Eval      %subst(FLD005:x(val):1) = z(val)           
+C                   When      y(val) = 6                                 
+C                   Eval      %subst(FLD006:x(val):1) = z(val)           
+C                   When      y(val) = 7                                 
+C                   Eval      %subst(FLD007:x(val):1) = z(val)           
+C                   When      y(val) = 8                                 
+C                   Eval      %subst(FLD008:x(val):1) = z(val) 
+C                   When      y(val) = 9                       
+C                   Eval      %subst(FLD009:x(val):1) = z(val) 
+C                   When      y(val) = 10                      
+C                   Eval      %subst(FLD010:x(val):1) = z(val) 
+C                   When      y(val) = 11                      
+C                   Eval      %subst(FLD011:x(val):1) = z(val) 
+C                   When      y(val) = 12                      
+C                   Eval      %subst(FLD012:x(val):1) = z(val) 
+C                   When      y(val) = 13                      
+C                   Eval      %subst(FLD013:x(val):1) = z(val) 
+C                   When      y(val) = 14                      
+C                   Eval      %subst(FLD014:x(val):1) = z(val) 
+C                   When      y(val) = 15                      
+C                   Eval      %subst(FLD015:x(val):1) = z(val) 
+C                   When      y(val) = 16                      
+C                   Eval      %subst(FLD016:x(val):1) = z(val) 
+C                   When      y(val) = 17                      
+C                   Eval      %subst(FLD017:x(val):1) = z(val) 
+C                   When      y(val) = 18                               
+C                   Eval      %subst(FLD018:x(val):1) = z(val)          
+C                   When      y(val) = 19                               
+C                   Eval      %subst(FLD019:x(val):1) = z(val)          
+C                   When      y(val) = 20                               
+C                   Eval      %subst(FLD020:x(val):1) = z(val)          
+C                   EndSl                                               
+C                                                                       
+C                   EndFor                                              
+C                                                                       
+C                   ENDSR                                               
+C                                                                       
+C     MovRight      BEGSR                                               
+C                                                                       
+C                   Exsr      follow                                    
+C                   Eval      x(1) = @x(1) + 1                          
+C                   Eval      z(1) = '>'                                
+C                                                                       
+C                   ENDSR                                               
+C                                                                            
+C     MovUp         BEGSR                                                    
+C                   Exsr      follow                                         
+C                   Eval      y(1) = @y(1) - 1                               
+C                   Eval      z(1) = '^'                                     
+C                   ENDSR                                                    
+C                                                                            
+C     MovLeft       BEGSR                                                    
+C                                                                            
+C                   Exsr      follow                                         
+C                   Eval      x(1) = @x(1) - 1                               
+C                   Eval      z(1) = '<'                                     
+C                                                                            
+C                   ENDSR                                                    
+C                                                                            
+C     MovDown       BEGSR                                                    
+C                                                                            
+C                   Exsr      follow                                         
+C                   Eval      y(1) = @y(1) + 1                               
+C                   Eval      z(1) = 'v'                       
+C                                                              
+C                   ENDSR                                      
+C                                                              
+C     *INZSR        BEGSR                                      
+C                                                              
+C                   Eval      i = 1                            
+C                   Eval      x(i) = 30                        
+C                   Eval      y(i) = 10                        
+C                   Eval      z(i) = '>'                       
+C                                                              
+C                   For       Val = 2 to 5 by 1                
+C                   Eval      i = Val                          
+C                   Eval      x(Val)= x(Val-1) - 1             
+C                   Eval      y(Val)= y(Val-1)                 
+C                   Eval      z(Val)= snakebody                
+C                   EndFor                                     
+C                                                              
+C                   ENDSR                                      
+C                                                              
+C     ClearScreen   BEGSR                                      
+C                   CLEAR                   FLD001             
+C                   CLEAR                   FLD002             
+C                   CLEAR                   FLD003             
+C                   CLEAR                   FLD004             
+C                   CLEAR                   FLD005             
+C                   CLEAR                   FLD006             
+C                   CLEAR                   FLD007             
+C                   CLEAR                   FLD008             
+C                   CLEAR                   FLD009             
+C                   CLEAR                   FLD010             
+C                   CLEAR                   FLD011             
+C                   CLEAR                   FLD012             
+C                   CLEAR                   FLD013             
+C                   CLEAR                   FLD014             
+C                   CLEAR                   FLD015             
+C                   CLEAR                   FLD016             
+C                   CLEAR                   FLD017             
+C                   CLEAR                   FLD018             
+C                   CLEAR                   FLD019             
+C                   CLEAR                   FLD020             
+C                   ENDSR                                      
+C                                                              
+C     follow        BegSr                                      
+C                                                              
+C                   Eval      @x = x                           
+C                   Eval      @y = y                           
+C                   For       Val = 2 to i by 1                
+C                   Eval      x(val) = @x(val-1)               
+C                   Eval      y(val) = @y(val-1)               
+C*                  Eval      z(val) = z(val-1)                
+C                   EndFor                                     
+C                                                              
+C                   EndSr                                      
+C                                                              
+C     makeFood      BegSr                                      
+C                                                              
+C                   Eval      overlap = *Off            
+C                                                       
+C                   If        makfood  = *On            
+C                                                       
+C     Loopx         TAG                                 
+C/Exec SQL                                              
+C+ Select Rand() * 60 Into :Randomx                     
+C+ From SYSIBM/SYSDUMMY1                                
+C/End-Exec                                              
+C                   For       Val = 1 to i by 1         
+C                   If        x(Val) = Randomx          
+C                   Eval      overlap = *On             
+C                   EndIf                               
+C                   EndFor                              
+C                                                       
+C                   If        overlap = *On             
+C                   Eval      overlap = *Off            
+C                   Goto      Loopx                     
+C                   EndIf                                       
+C                                                               
+C     Loopy         TAG                                         
+C/Exec SQL                                                      
+C+ Select Rand() * 10 Into :Randomy                             
+C+ From SYSIBM/SYSDUMMY1                                        
+C/End-Exec                                                      
+C                   For       Val = 1 to i by 1                 
+C                   If        y(Val) = Randomy                  
+C                   Eval      overlap = *On                     
+C                   EndIf                                       
+C                   EndFor                                      
+C                                                               
+C                   If        overlap = *On                     
+C                   Eval      overlap = *Off                    
+C                   Goto      Loopy                             
+C                   EndIf                                       
+C                                                               
+C                   Eval      makfood  = *Off                   
+C                   EndIf                                          
+C                                                                  
+C                   SELECT                                         
+C                   When      Randomy= 1                           
+C                   Eval      %subst(FLD001:Randomx:1)= food       
+C                   When      Randomy= 2                           
+C                   Eval      %subst(FLD002:Randomx:1)= food       
+C                   When      Randomy= 3                           
+C                   Eval      %subst(FLD003:Randomx:1)= food       
+C                   When      Randomy= 4                           
+C                   Eval      %subst(FLD004:Randomx:1)= food       
+C                   When      Randomy= 5                           
+C                   Eval      %subst(FLD005:Randomx:1)= food       
+C                   When      Randomy= 6                           
+C                   Eval      %subst(FLD006:Randomx:1)= food       
+C                   When      Randomy= 7                           
+C                   Eval      %subst(FLD007:Randomx:1)= food       
+C                   When      Randomy= 8                           
+C                   Eval      %subst(FLD008:Randomx:1)= food       
+C                   When      Randomy= 9                                
+C                   Eval      %subst(FLD009:Randomx:1)= food            
+C                   When      Randomy= 10                               
+C                   Eval      %subst(FLD010:Randomx:1)= food            
+C                   When      Randomy= 11                               
+C                   Eval      %subst(FLD011:Randomx:1)= food            
+C                   When      Randomy= 12                               
+C                   Eval      %subst(FLD012:Randomx:1)= food            
+C                   When      Randomy= 13                               
+C                   Eval      %subst(FLD013:Randomx:1)= food            
+C                   When      Randomy= 14                               
+C                   Eval      %subst(FLD014:Randomx:1)= food            
+C                   When      Randomy= 15                               
+C                   Eval      %subst(FLD015:Randomx:1)= food            
+C                   When      Randomy= 16                               
+C                   Eval      %subst(FLD016:Randomx:1)= food            
+C                   When      Randomy= 17                               
+C                   Eval      %subst(FLD017:Randomx:1)= food            
+C                   When      Randomy= 18                               
+C                   Eval      %subst(FLD018:Randomx:1)= food          
+C                   When      Randomy= 19                             
+C                   Eval      %subst(FLD019:Randomx:1)= food          
+C                   When      Randomy= 20                             
+C                   Eval      %subst(FLD020:Randomx:1)= food          
+C                   EndSl                                             
+C                                                                     
+C                   EndSr                                             
+C                                                                     
+C     checksituationBegSr                                             
+C                   if        x(1) = Randomx and y(1) = Randomy       
+C                   Eval      Scoren= Scoren+ 1                       
+C                   MOVE      Scoren        Score                     
+C                   Eval      makfood = *On                           
+C                   Exsr      increasebody                            
+C                   Else                                              
+C                   For       Val = 2 to i by 1                       
+C                   If        x(1) = x(val)  and y(1) = y(val)        
+C                   EXFMT     GAMEOVER                                
+C                   GOTO      END                                
+C                   endif                                        
+C                   Endfor                                       
+C                   endif                                        
+C                                                                
+C                   EndSr                                        
+C                                                                
+C     increasebody  Begsr                                        
+C                   eval      i = i + 1                          
+C                   If        x(i-1) < x(i-2)                    
+C                   eval      x(i) = x (i-1)                     
+C                   eval      y(i) = y (i-1) + 1                 
+C                   elseif    x(i-1) < x(i-2)                    
+C                   eval      x(i) = x (i-1) - 1                 
+C                   eval      y(i) = y (i-1)                     
+C                   else                                         
+C                   eval      x(i) = x (i-1) + 1                 
+C                   eval      y(i) = y (i-1)                     
+C                   endif                                        
+C                   eval      z(i) = snakebody                     
+C                   EndSr                                          
+C                                                                  
+C     bldboder      Begsr                                          
+C                   For       Val=1 to 20  by 1                    
+C                   SELECT                                         
+C                   When      Val= 1                               
+C                   Eval      %subst(FLD001:1:1)= sideborder       
+C                   Eval      %subst(FLD001:60:1)= sideborder      
+C                   For       k = 1 to 60 by 1                     
+C                   Eval      %subst(FLD001:k:1) = topbotborder    
+C                   EndFOr                                         
+C                   When      Val= 2                               
+C                   Eval      %subst(FLD002:1:1)= sideborder       
+C                   Eval      %subst(FLD002:60:1)= sideborder      
+C                   When      Val= 3                               
+C                   Eval      %subst(FLD003:1:1)= sideborder       
+C                   Eval      %subst(FLD003:60:1)= sideborder      
+C                   When      Val= 4                               
+C                   Eval      %subst(FLD004:1:1)= sideborder     
+C                   Eval      %subst(FLD004:60:1)= sideborder    
+C                   When      Val= 5                             
+C                   Eval      %subst(FLD005:1:1)= sideborder     
+C                   Eval      %subst(FLD005:60:1)= sideborder    
+C                   When      Val= 6                             
+C                   Eval      %subst(FLD006:1:1)= sideborder     
+C                   Eval      %subst(FLD006:60:1)= sideborder    
+C                   When      Val= 7                             
+C                   Eval      %subst(FLD007:1:1)= sideborder     
+C                   Eval      %subst(FLD007:60:1)= sideborder    
+C                   When      Val= 8                             
+C                   Eval      %subst(FLD008:1:1)= sideborder     
+C                   Eval      %subst(FLD008:60:1)= sideborder    
+C                   When      Val= 9                             
+C                   Eval      %subst(FLD009:1:1)= sideborder     
+C                   Eval      %subst(FLD009:60:1)= sideborder    
+C                   When      Val=10                             
+C                   Eval      %subst(FLD010:1:1)= sideborder     
+C                   Eval      %subst(FLD010:60:1)= sideborder     
+C                   When      Val= 11                             
+C                   Eval      %subst(FLD011:1:1)= sideborder      
+C                   Eval      %subst(FLD011:60:1)= sideborder     
+C                   When      Val= 12                             
+C                   Eval      %subst(FLD012:1:1)= sideborder      
+C                   Eval      %subst(FLD012:60:1)= sideborder     
+C                   When      Val= 13                             
+C                   Eval      %subst(FLD013:1:1)= sideborder      
+C                   Eval      %subst(FLD013:60:1)= sideborder     
+C                   When      Val= 14                             
+C                   Eval      %subst(FLD014:1:1)= sideborder      
+C                   Eval      %subst(FLD014:60:1)= sideborder     
+C                   When      Val= 15                             
+C                   Eval      %subst(FLD015:1:1)= sideborder      
+C                   Eval      %subst(FLD015:60:1)= sideborder     
+C                   When      Val= 16                             
+C                   Eval      %subst(FLD016:1:1)= sideborder      
+C                   Eval      %subst(FLD016:60:1)= sideborder     
+C                   When      Val= 17                               
+C                   Eval      %subst(FLD017:1:1)= sideborder        
+C                   Eval      %subst(FLD017:60:1)= sideborder       
+C                   When      Val= 18                               
+C                   Eval      %subst(FLD018:1:1)= sideborder        
+C                   Eval      %subst(FLD018:60:1)= sideborder       
+C                   When      Val= 19                               
+C                   Eval      %subst(FLD019:1:1)= sideborder        
+C                   Eval      %subst(FLD019:60:1)= sideborder       
+C                   When      Val= 20                               
+C                   Eval      %subst(FLD020:1:1)= sideborder        
+C                   Eval      %subst(FLD020:60:1)= sideborder       
+C                   For       k = 1 to 60 by 1                      
+C                   Eval      %subst(FLD020:k:1) = topbotborder     
+C                   EndFOr                                          
+C                   EndSl                                           
+C                   EndFor                                          
+C                   endSr                                           
+                                                                
